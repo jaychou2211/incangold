@@ -17,6 +17,10 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "paths": {
+      "@game/*": ["src/game/*"],
+      "@helper/*": ["src/helper/*"]
+    }
   }
 }
