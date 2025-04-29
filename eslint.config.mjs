@@ -25,7 +25,13 @@ export default [
     rules: {
       semi: 'error',
       quotes: ['error', 'single', { avoidEscape: true }],
-      indent: ['error', 2, { SwitchCase: 1 }],
+      indent: ['error', 2, { 
+        SwitchCase: 1,
+        ignoredNodes: [
+          'PropertyDefinition[decorators]',
+          'PropertyDefinition[decorators] > Decorator'
+        ]
+      }],
     }
   },
   {
