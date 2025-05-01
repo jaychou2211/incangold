@@ -20,15 +20,6 @@ class CardDto {
   hazard?: string;
 }
 
-class CampDto {
-  @Expose()
-  points: number;
-
-  @Expose()
-  @Type(() => ArtifactCardDto)
-  artifacts: ArtifactCardDto[];
-}
-
 class ExplorerDto {
   @Expose()
   id: string;
@@ -37,14 +28,7 @@ class ExplorerDto {
   no: number;
 
   @Expose()
-  points: number;
-
-  @Expose()
   position: string;
-
-  @Expose()
-  @Type(() => CampDto)
-  camp: CampDto;
 }
 
 class CorridorDto {
@@ -112,15 +96,7 @@ addApiResponseSchema(GetGameResponseDto, {
     explorers: { type: 'array', items: { type: 'object', properties: {
       id: { type: 'string' },
       no: { type: 'number' },
-      points: { type: 'number' },
       position: { type: 'string' },
-      camp: { type: 'object', properties: {
-        points: { type: 'number' },
-        artifacts: { type: 'array', items: { type: 'object', properties: {
-          type: { type: 'string' },
-          points: { type: 'number' },
-        } } },
-      } },
     } } },
   },
 });
@@ -142,23 +118,17 @@ addApiResponseExample(GetGameResponseDto, {
     {
       id: 'explorer1',
       no: 1,
-      points: 2,
       position: 'Corridor',
-      camp: { points: 0, artifacts: [] }
     },
     {
       id: 'explorer2',
       no: 2,
-      points: 2,
       position: 'Corridor',
-      camp: { points: 0, artifacts: [ { type: 'Artifact', points: 7 } ] }
     },
     {
       id: 'explorer3',
       no: 3,
-      points: 0,
       position: 'Camp',
-      camp: { points: 0, artifacts: [] }
     }
   ],
   deckLength: 29

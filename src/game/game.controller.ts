@@ -3,8 +3,10 @@ import { getApiResponseMediaTypeObjectFromDto } from '@helper/api-doc/api-respon
 import { Controller, Post, Put, Get, Body, Param } from '@nestjs/common';
 import { ApiBody, ApiOkResponse } from '@nestjs/swagger';
 import { StartGameDto } from './dto';
+import { ResponseMetadata } from './dto/events-dto-schema';
 import { GameHistoryResponseDto } from './dto/game-history-response.dto';
 import { GetGameResponseDto } from './dto/get-game-response.dto';
+import { GetMyStatusDto } from './dto/get-my-status.dto';
 import { MakeDecisionDto } from './dto/make-decision.dto';
 
 @Controller('game')
@@ -37,7 +39,18 @@ export class GameController {
     // throw new Error('Not implemented');
   }
 
+  @Get(':gameId/explorer/me')
+  @ApiOkResponse({
+    content: {
+      'application/json': getApiResponseMediaTypeObjectFromDto(GetMyStatusDto)
+    }})
+  getMyStatus(@Param('gameId') gameId: string) {
+    console.log(gameId);
+    // throw new Error('Not implemented');
+  }
+
   @Get(':gameId/events')
+  @ApiOkResponse(ResponseMetadata)
   getEvents(@Param('gameId') gameId: string) {
     console.log(gameId);
     // throw new Error('Not implemented');
