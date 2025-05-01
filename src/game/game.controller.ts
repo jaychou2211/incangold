@@ -1,25 +1,32 @@
-import { getApiBodySchemaHostFromDto } from '@helper/api-doc';
-import { getApiResponseMediaTypeObjectFromDto } from '@helper/api-doc/api-response';
 import { Controller, Post, Put, Get, Body, Param } from '@nestjs/common';
-import { ApiBody, ApiOkResponse } from '@nestjs/swagger';
-import { StartGameDto } from './dto';
-import { ResponseMetadata } from './dto/events-dto-schema';
-import { GameHistoryResponseDto } from './dto/game-history-response.dto';
-import { GetGameResponseDto } from './dto/get-game-response.dto';
-import { GetMyStatusDto } from './dto/get-my-status.dto';
-import { MakeDecisionDto } from './dto/make-decision.dto';
+import { 
+  GetEventsApiDoc, 
+  GetGameApiDoc, 
+  GetHistoryApiDoc,
+  GetMyStatusApiDoc,
+  MakeDecisionApiDoc,
+  StartGameApiDoc
+} from './api-doc';
+import { 
+  StartGameDto, 
+  MakeDecisionDto, 
+  GetMyStatusDto, 
+  GameEventDto, 
+  GameHistoryResponseDto, 
+  GetGameResponseDto 
+} from './dto';
 
 @Controller('game')
 export class GameController {
   @Post()
-  @ApiBody(getApiBodySchemaHostFromDto(StartGameDto))
+  @StartGameApiDoc()
   startGame(@Body() startGameDto: StartGameDto) {
     console.log(startGameDto);
     // throw new Error('Not implemented');
   }
 
   @Put(':gameId/make-decision')
-  @ApiBody(getApiBodySchemaHostFromDto(MakeDecisionDto))
+  @MakeDecisionApiDoc()
   makeDecision(
     @Param('gameId') gameId: string,
     @Body() decisionData: MakeDecisionDto
@@ -30,39 +37,34 @@ export class GameController {
   }
 
   @Get(':gameId')
-  @ApiOkResponse({
-    content: {
-      'application/json': getApiResponseMediaTypeObjectFromDto(GetGameResponseDto)
-    }})
-  getGame(@Param('gameId') gameId: string) {
+  @GetGameApiDoc()
+  getGame(@Param('gameId') gameId: string): GetGameResponseDto {
     console.log(gameId);
     // throw new Error('Not implemented');
+    return null as unknown as GetGameResponseDto;
   }
 
   @Get(':gameId/explorer/me')
-  @ApiOkResponse({
-    content: {
-      'application/json': getApiResponseMediaTypeObjectFromDto(GetMyStatusDto)
-    }})
-  getMyStatus(@Param('gameId') gameId: string) {
+  @GetMyStatusApiDoc()
+  getMyStatus(@Param('gameId') gameId: string): GetMyStatusDto {
     console.log(gameId);
     // throw new Error('Not implemented');
+    return null as unknown as GetMyStatusDto;
   }
 
   @Get(':gameId/events')
-  @ApiOkResponse(ResponseMetadata)
-  getEvents(@Param('gameId') gameId: string) {
+  @GetEventsApiDoc()
+  getEvents(@Param('gameId') gameId: string): GameEventDto[] {
     console.log(gameId);
     // throw new Error('Not implemented');
+    return null as unknown as GameEventDto[];
   }
 
   @Get(':gameId/history')
-  @ApiOkResponse({
-    content: {
-      'application/json': getApiResponseMediaTypeObjectFromDto(GameHistoryResponseDto)
-    }})
-  getHistory(@Param('gameId') gameId: string) {
+  @GetHistoryApiDoc()
+  getHistory(@Param('gameId') gameId: string): GameHistoryResponseDto {
     console.log(gameId);
     // throw new Error('Not implemented');
+    return null as unknown as GameHistoryResponseDto;
   }
 }

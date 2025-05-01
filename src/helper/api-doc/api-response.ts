@@ -20,13 +20,17 @@ export function addApiResponseExample<T>(
   dto.example = example;
 }
 
-export function getApiResponseMediaTypeObjectFromDto<T>(
+export function getApiResponseMetadataFromDto<T>(
   dto: { new (...args: unknown[]): T },
 ) {
   return {
-    // @ts-expect-error - extracting schema definition from dto class for Swagger documentation
-    schema: dto.schema,
-    // @ts-expect-error - extracting example definition from dto class for Swagger documentation
-    example: dto.example,
-  } satisfies MediaTypeObject;
+    content: {
+      'application/json': {
+        // @ts-expect-error - extracting schema definition from dto class for Swagger documentation
+        schema: dto.schema,
+        // @ts-expect-error - extracting example definition from dto class for Swagger documentation
+        example: dto.example,
+      } satisfies MediaTypeObject,
+    },
+  } satisfies ApiResponseOptions;
 }

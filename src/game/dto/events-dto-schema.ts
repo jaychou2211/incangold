@@ -1,9 +1,8 @@
 import { HazardType } from '@game/domain/cards';
-import { GameEventName } from '@game/domain/events/game-event';
-import { RoundEndReason } from '@game/domain/events/round-end-event';
+import { GameEventName, RoundEndReason } from '@game/domain/events';
 import { Decision } from '@game/domain/explorer';
+import { Schema } from '@helper/api-doc';
 import { ApiResponseMetadata } from '@nestjs/swagger';
-import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 
 const EXPLORER_IDS = {
   EXPLORER_1: '9e8e5ea3-9964-4f3c-8329-32a0d5f63ce9',
@@ -12,13 +11,13 @@ const EXPLORER_IDS = {
   EXPLORER_4: 'd2c4bfc3-5316-4f6e-9052-8a636e193149'
 };
 
-const gameEventProperties: Record<string, SchemaObject> = {
+const gameEventProperties: Record<string, Schema> = {
   name: { type: 'string' },
   round: { type: 'number' },
   turn: { type: 'number' },
 };
 
-const artifactCardRevealedEventSchema: SchemaObject = {
+const artifactCardRevealedEventSchema: Schema = {
   type: 'object',
   title: GameEventName.ArtifactCardRevealedEvent,
   properties: {
@@ -37,7 +36,7 @@ const artifactCardRevealedEventSchema: SchemaObject = {
   },
 };
 
-const treasureCardRevealedEventSchema: SchemaObject = {
+const treasureCardRevealedEventSchema: Schema = {
   type: 'object',
   title: GameEventName.TreasureCardRevealedEvent,
   properties: {
@@ -64,7 +63,7 @@ const treasureCardRevealedEventSchema: SchemaObject = {
   },
 };
 
-const hazardCardRevealedEventSchema: SchemaObject = {
+const hazardCardRevealedEventSchema: Schema = {
   type: 'object',
   title: GameEventName.HazardCardRevealedEvent,
   properties: {
@@ -80,7 +79,7 @@ const hazardCardRevealedEventSchema: SchemaObject = {
   },
 };
 
-const oneExplorerMadeDecisionEventSchema: SchemaObject = {
+const oneExplorerMadeDecisionEventSchema: Schema = {
   type: 'object',
   title: GameEventName.OneExplorerMadeDecisionEvent,
   properties: {
@@ -96,7 +95,7 @@ const oneExplorerMadeDecisionEventSchema: SchemaObject = {
   },
 };
 
-const allExplorersMadeDecisionEventSchema: SchemaObject = {
+const allExplorersMadeDecisionEventSchema: Schema = {
   type: 'object',
   title: GameEventName.AllExplorersMadeDecisionEvent,
   properties: {
@@ -123,7 +122,7 @@ const allExplorersMadeDecisionEventSchema: SchemaObject = {
   },
 };
 
-const returnedToCampEventSchema: SchemaObject = {
+const returnedToCampEventSchema: Schema = {
   type: 'object',
   title: GameEventName.ReturnedToCampEvent,
   properties: {
@@ -166,7 +165,7 @@ const returnedToCampEventSchema: SchemaObject = {
   },
 };
 
-const roundEndEventSchema: SchemaObject = {
+const roundEndEventSchema: Schema = {
   type: 'object',
   title: GameEventName.RoundEndEvent,
   properties: {
@@ -184,7 +183,7 @@ const roundEndEventSchema: SchemaObject = {
   },
 };
 
-const gameOverEventSchema: SchemaObject = {
+const gameOverEventSchema: Schema = {
   type: 'object',
   title: GameEventName.GameOverEvent,
   properties: {
@@ -198,7 +197,7 @@ const gameOverEventSchema: SchemaObject = {
   },
 };
 
-export const ResponseMetadata = {
+export const eventsResponseMetadata = {
   isArray: true,
   content: {
     'application/json': {
@@ -221,3 +220,9 @@ export const ResponseMetadata = {
     },
   },
 } satisfies ApiResponseMetadata;
+
+export type GameEventDto = {
+  name: GameEventName;
+  round: number;
+  turn: number;
+}
